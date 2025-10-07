@@ -94,7 +94,7 @@ class MovieCreateSchema(BaseModel):
 class MovieUpdateSchema(BaseModel):
     name: Optional[str] = None
     date: Optional[date] = None
-    score: Optional[float] = None
+    score: Optional[float] = Field(None, ge=0, le=100)
     overview: Optional[str] = None
     status: Optional[StatusEnum] = None
     budget: Optional[float] = None

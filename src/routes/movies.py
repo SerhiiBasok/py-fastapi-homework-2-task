@@ -64,7 +64,7 @@ async def get_movie(movie_id: int, db: AsyncSession = Depends(get_db)):
     return result
 
 
-@router.delete("/movies/{movie_id}/", response_model=MovieDetailSchema)
+@router.delete("/movies/{movie_id}/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_movie(movie_id: int, db: AsyncSession = Depends(get_db)):
     result = await get_movie_by_id(db, movie_id)
     if not result:
