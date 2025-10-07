@@ -1,24 +1,23 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Body, Depends, HTTPException, Path, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.responses import Response
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import joinedload
+from starlette import status
 
 from crud.movies import (
+    create_movie,
     get_movie_by_id,
     get_movies,
-    get_or_create,
-    create_movie,
     update_movie,
 )
 from database import MovieModel, get_db
-from database.models import ActorModel, CountryModel, GenreModel, LanguageModel
 from schemas.movies import (
     MovieCreateSchema,
+    MovieDetailSchema,
     MovieListResponseSchema,
     MovieUpdateSchema,
-    MovieDetailSchema,
 )
 
 router = APIRouter()
@@ -74,7 +73,7 @@ async def delete_movie(movie_id: int, db: AsyncSession = Depends(get_db)):
         )
     await db.delete(result)
     await db.commit()
-    return result
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.post("/movies/", response_model=MovieDetailSchema, status_code=201)

@@ -1,15 +1,15 @@
-from fastapi import HTTPException, Depends, Path, Body
+from fastapi import Body, Depends, HTTPException, Path
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import joinedload
 
 from database import get_db
 from database.models import (
-    MovieModel,
-    GenreModel,
     ActorModel,
-    LanguageModel,
     CountryModel,
+    GenreModel,
+    LanguageModel,
+    MovieModel,
 )
 from schemas.movies import MovieCreateSchema, MovieUpdateSchema
 
